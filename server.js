@@ -10,10 +10,10 @@ const PORT = process.env.PORT || 3000;
 
 // Environment variables with fallbacks
 const YAHOO_API_URL = process.env.YAHOO_API_URL || 'https://jlp.yahooapis.jp/FuriganaService/V2/furigana';
-const YAHOO_API_KEY = process.env.YAHOO_API_KEY || 'Yahoo AppID: dj00aiZpPWc2Vk1NOFVsWmx5SCZzPWNvbnN1bWVyc2VjcmV0Jng9MGE-8';
+const YAHOO_API_KEY = process.env.YAHOO_API_KEY || 'Yahoo AppID: dj00aiZpPWc2Vk1NOFVsWmx5SCZzPWNvbnN1bWVyc2VjcmV0Jng9MGE-';
 
 // Validate required environment variables
-if (!YAHOO_API_KEY || YAHOO_API_KEY === 'Yahoo AppID: dj00aiZpPWc2Vk1NOFVsWmx5SCZzPWNvbnN1bWVyc2VjcmV0Jng9MGE-8') {
+if (!YAHOO_API_KEY || YAHOO_API_KEY === 'Yahoo AppID: dj00aiZpPWc2Vk1NOFVsWmx5SCZzPWNvbnN1bWVyc2VjcmV0Jng9MGE-') {
   console.warn('⚠️  Warning: Using default Yahoo API key. Please set YAHOO_API_KEY environment variable.');
 }
 
