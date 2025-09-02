@@ -73,7 +73,7 @@ app.post('/api/furigana', async (req, res) => {
     // Log the curl command for debugging
     const curlCommand = `curl -X POST ${YAHOO_API_URL} \\
   -H "Content-Type: application/json" \\
-  -H "User-Agent: ${YAHOO_API_KEY}" \\
+  -H "User-Agent: Yahoo AppID: dj00aiZpPWc2Vk1NOFVsWmx5SCZzPWNvbnN1bWVyc2VjcmV0Jng9MGE-" \\
   -d '${JSON.stringify(requestBody)}'`;
     console.log('🔍 Yahoo API Request (curl):');
     console.log(curlCommand);
