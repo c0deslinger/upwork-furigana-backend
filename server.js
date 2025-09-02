@@ -8,6 +8,15 @@ require('dotenv').config({ path: './config.env' });
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Environment variables with fallbacks
+const YAHOO_API_URL = process.env.YAHOO_API_URL || 'https://jlp.yahooapis.jp/FuriganaService/V2/furigana';
+const YAHOO_API_KEY = process.env.YAHOO_API_KEY || 'Yahoo AppID: dj00aiZpPWc2Vk1NOFVsWmx5SCZzPWNvbnN1bWVyc2VjcmV0Jng9MGE-8';
+
+// Validate required environment variables
+if (!YAHOO_API_KEY || YAHOO_API_KEY === 'Yahoo AppID: dj00aiZpPWc2Vk1NOFVsWmx5SCZzPWNvbnN1bWVyc2VjcmV0Jng9MGE-8') {
+  console.warn('⚠️  Warning: Using default Yahoo API key. Please set YAHOO_API_KEY environment variable.');
+}
+
 // Middleware
 app.use(helmet());
 app.use(morgan('combined'));
@@ -62,21 +71,21 @@ app.post('/api/furigana', async (req, res) => {
     console.log(`Processing furigana request for text: "${text}"`);
 
     // Log the curl command for debugging
-    const curlCommand = `curl -X POST ${process.env.YAHOO_API_URL} \\
+    const curlCommand = `curl -X POST ${YAHOO_API_URL} \\
   -H "Content-Type: application/json" \\
-  -H "User-Agent: ${process.env.YAHOO_API_KEY}" \\
+  -H "User-Agent: ${YAHOO_API_KEY}" \\
   -d '${JSON.stringify(requestBody)}'`;
     console.log('🔍 Yahoo API Request (curl):');
     console.log(curlCommand);
 
     // Make request to Yahoo API
     const yahooResponse = await axios.post(
-      process.env.YAHOO_API_URL,
+      YAHOO_API_URL,
       requestBody,
       {
         headers: {
           'Content-Type': 'application/json',
-          'User-Agent': process.env.YAHOO_API_KEY,
+          'User-Agent': YAHOO_API_KEY,
         },
         timeout: 10000 // 10 second timeout
       }
@@ -143,6 +152,12 @@ app.listen(PORT, () => {
   console.log(`📝 Health check: http://localhost:${PORT}/health`);
   console.log(`🎯 Furigana endpoint: http://localhost:${PORT}/api/furigana`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV}`);
+  console.log(`🔑 Yahoo API URL: ${YAHOO_API_URL}`);
+  console.log(`🔑 Yahoo API Key: ${YAHOO_API_KEY ? 'Set' : 'NOT SET'}`);
+  if (YAHOO_API_KEY) {
+    console.log(`🔑 Yahoo API Key Length: ${YAHOO_API_KEY.length}`);
+    console.log(`🔑 Yahoo API Key Preview: ${YAHOO_API_KEY.substring(0, 20)}...`);
+  }
 });
 
 module.exports = app;

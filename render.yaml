@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: furigana-backend
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: YAHOO_API_URL
+        value: https://jlp.yahooapis.jp/FuriganaService/V2/furigana
+      - key: YAHOO_API_KEY
+        sync: false  # Set this manually in Render dashboard
+      - key: CORS_ORIGIN
+        value: "*"
